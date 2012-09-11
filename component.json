@@ -1,0 +1,12 @@
+{
+  "name": "template-render",
+  "repo": "ForbesLindesay/template-render",
+  "description": "Renderer for data-table rows using very simple templates",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "scripts": [
+    "index.js"
+  ]
+}
