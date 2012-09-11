@@ -4,7 +4,9 @@
   "description": "Renderer for data-table rows using very simple templates",
   "version": "0.0.1",
   "keywords": [],
-  "dependencies": {},
+  "dependencies": {
+    "component/domify": "*"
+  },
   "development": {},
   "scripts": [
     "index.js"
