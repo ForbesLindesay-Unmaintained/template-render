@@ -1,4 +1,5 @@
 var domify = require('domify');
+var escapeHTML = require('escape-html');
 
 module.exports = renderer;
 function renderer(table) {
@@ -46,7 +47,7 @@ function renderTemplate(string, object) {
     if (unescaped) {
       return object[unescaped[1]];
     } else {
-      return escape(object[name]);
+      return escapeHTML(object[name]);
     }
   });
 }

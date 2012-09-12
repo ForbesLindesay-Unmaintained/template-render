@@ -22,7 +22,7 @@
             jsrenderer({foo: '<br />', bar: '<br />'}, null, null, null, function (err, res) {
               if (err) throw err;
               expect(res).to.be.ok();
-              expect(res.outerHTML).to.equal('<tr><td>%3Cbr%20/%3E</td><td><br></td></tr>');
+              expect(res.outerHTML).to.equal('<tr><td>&lt;br /&gt;</td><td><br></td></tr>');
               done();
             });
           });
@@ -33,7 +33,7 @@
             htmlrenderer({foo: '<br />', bar: '<br />'}, null, null, null, function (err, res) {
               if (err) throw err;
               expect(res).to.be.ok();
-              expect(res.outerHTML).to.equal('<tr><td>%3Cbr%20/%3E</td><td><br></td></tr>');
+              expect(res.outerHTML).to.equal('<tr><td>&lt;br /&gt;</td><td><br></td></tr>');
               done();
             });
           });
