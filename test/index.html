@@ -18,20 +18,22 @@
         describe('rendering a template that was set in JavaScript', function () {
           it('renders', function (done) {
             var jsrenderer = renderer();
-            jsrenderer.setTemplate('<tr><td>{{foo}}</td><td>{{{bar}}}</td></tr>');
+            jsrenderer.setTemplate('  \n<tr><td>{{foo}}</td><td>{{{bar}}}</td></tr>\n  ');
             jsrenderer({foo: '<br />', bar: '<br />'}, null, null, null, function (err, res) {
               if (err) throw err;
-              expect(res).to.have.property('outerHTML', '<tr><td>%3Cbr%20/%3E</td><td><br></td></tr>');
+              expect(res).to.be.ok();
+              expect(res.outerHTML).to.equal('<tr><td>%3Cbr%20/%3E</td><td><br></td></tr>');
               done();
             });
           });
         });
         describe('rendering a template set in the html', function () {
           it('renders', function (done) {
-            var htmlrenderer = renderer({templates: {rowTemplate: '<tr><td>{{foo}}</td><td>{{{bar}}}</td></tr>'}});
+            var htmlrenderer = renderer({templates: {rowTemplate: '\n  <tr><td>{{foo}}</td><td>{{{bar}}}</td></tr>\n  '}});
             htmlrenderer({foo: '<br />', bar: '<br />'}, null, null, null, function (err, res) {
               if (err) throw err;
-              expect(res).to.have.property('outerHTML', '<tr><td>%3Cbr%20/%3E</td><td><br></td></tr>');
+              expect(res).to.be.ok();
+              expect(res.outerHTML).to.equal('<tr><td>%3Cbr%20/%3E</td><td><br></td></tr>');
               done();
             });
           });

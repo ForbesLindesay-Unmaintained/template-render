@@ -20,7 +20,7 @@ function renderer(table) {
       if (err) return callback(err);
       var res;
       try {
-        res = domify(renderTemplate(str, row));
+        res = domify(renderTemplate(str, row).trim());
       } catch (ex) {
         return callback(ex);
       }
