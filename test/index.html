@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="mocha.css" />
+    <link href="../build/build.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="expect.js"></script>
+    <script src="mocha.js"></script>
+    <script>
+      mocha.setup('bdd');
+    </script>
+    <script src="../build/build.js"></script>
+    <script>
+      (function () {
+        var renderer = require('template-render');
+        describe('rendering a template that was set in JavaScript', function () {
+          it('renders', function (done) {
+            var jsrenderer = renderer();
+            jsrenderer.setTemplate('<tr><td>{{foo}}</td><td>{{{bar}}}</td></tr>');
+            jsrenderer({foo: '<br />', bar: '<br />'}, null, null, null, function (err, res) {
+              if (err) throw err;
+              expect(res).to.have.property('outerHTML', '<tr><td>%3Cbr%20/%3E</td><td><br></td></tr>');
+              done();
+            });
+          });
+        });
+        describe('rendering a template set in the html', function () {
+          it('renders', function (done) {
+            var htmlrenderer = renderer({templates: {rowTemplate: '<tr><td>{{foo}}</td><td>{{{bar}}}</td></tr>'}});
+            htmlrenderer({foo: '<br />', bar: '<br />'}, null, null, null, function (err, res) {
+              if (err) throw err;
+              expect(res).to.have.property('outerHTML', '<tr><td>%3Cbr%20/%3E</td><td><br></td></tr>');
+              done();
+            });
+          });
+        });
+      }());
+    </script>
+    <script>
+      mocha.globals(['require']).run();
+    </script>
+  </body>
+</html>
