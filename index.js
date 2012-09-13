@@ -3,6 +3,7 @@ var escapeHTML = require('escape-html');
 
 module.exports = renderer;
 function renderer(table) {
+  if (arguments.length === 0) return renderer;
   var template;
   var waitingForTemplate = [];
   function loadTemplate(callback) {
