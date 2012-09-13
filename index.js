@@ -6,7 +6,7 @@ function renderer(tableOrTemplate) {
   if (arguments.length === 0) return renderer;
   var template;
 
-  function render(row, rows, index, id, callback) {
+  function render(row, options, callback) {
     var res;
     try {
       res = domify(renderTemplate(template, row).trim());
