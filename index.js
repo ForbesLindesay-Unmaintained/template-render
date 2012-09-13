@@ -2,44 +2,29 @@ var domify = require('domify');
 var escapeHTML = require('escape-html');
 
 module.exports = renderer;
-function renderer(table) {
+function renderer(tableOrTemplate) {
   if (arguments.length === 0) return renderer;
   var template;
-  var waitingForTemplate = [];
-  function loadTemplate(callback) {
-    if (template) {
-      return callback(null, template);
-    } else if (table.templates.rowTemplate) {
-      template = table.templates.rowTemplate;
-      return loadTemplate(callback);
-    } else {
-      waitingForTemplate.push(callback);
-    }
-  }
 
   function render(row, rows, index, id, callback) {
-    loadTemplate(function (err, str) {
-      if (err) return callback(err);
-      var res;
-      try {
-        res = domify(renderTemplate(str, row).trim());
-      } catch (ex) {
-        return callback(ex);
-      }
-      return callback(null, res);
-    });
-  }
-
-  render.setTemplate = setTemplate;
-  function setTemplate(str) {
-    template = str;
-    for (var i = 0; i < waitingForTemplate.length; i++) {
-      waitingForTemplate[i](null, template);
+    var res;
+    try {
+      res = domify(renderTemplate(template, row).trim());
+    } catch (ex) {
+      return callback(ex);
     }
-    waitingForTemplate = null;
+    return callback(null, res);
   }
 
-  return render;
+  if (typeof tableOrTemplate === 'string') {
+    template = tableOrTemplate;
+    return constant(render); //template set manually, will be called again and passed a table (which we ignore)
+  } else if (typeof tableOrTemplate === 'object' && typeof tableOrTemplate.templates === 'object' && typeof tableOrTemplate.templates.rowTemplate === 'string') {
+    template = tableOrTemplate.templates.rowTemplate;
+    return render;
+  } else {
+    throw new Error('You must define a template.');
+  }
 }
 
 function renderTemplate(string, object) {
@@ -51,4 +36,10 @@ function renderTemplate(string, object) {
       return escapeHTML(object[name]);
     }
   });
+}
+
+function constant(val) {
+  return function () {
+    return val;
+  };
 }

@@ -9,7 +9,7 @@ Renderer for data-table rows using very simple templates
 ### Initialize
 
 ```javascript
-var render = require('template-render')(table);
+var renderer = require('template-render');
 ```
 
 ### Set Template
@@ -32,7 +32,7 @@ From HTML:
 From JavaScript:
 
 ```javascript
-render.setTemplate('<tr><td>{{username}}</td><td>{{realName}}</td></tr>');
+renderer = renderer('<tr><td>{{username}}</td><td>{{realName}}</td></tr>');
 ```
 
 ### Register
@@ -40,5 +40,5 @@ render.setTemplate('<tr><td>{{username}}</td><td>{{realName}}</td></tr>');
 To register this as the renderer for a given data-table:
 
 ```javascript
-table.renderer(render);
+table.renderer(renderer);
 ```

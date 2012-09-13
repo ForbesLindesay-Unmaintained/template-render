@@ -17,8 +17,7 @@
         var renderer = require('template-render');
         describe('rendering a template that was set in JavaScript', function () {
           it('renders', function (done) {
-            var jsrenderer = renderer();
-            jsrenderer.setTemplate('  \n<tr><td>{{foo}}</td><td>{{{bar}}}</td></tr>\n  ');
+            var jsrenderer = renderer('  \n<tr><td>{{foo}}</td><td>{{{bar}}}</td></tr>\n  ')({});
             jsrenderer({foo: '<br />', bar: '<br />'}, null, null, null, function (err, res) {
               if (err) throw err;
               expect(res).to.be.ok();
